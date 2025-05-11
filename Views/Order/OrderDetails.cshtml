@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Mubayaa.EF.OrderDetail>
+
+@{
+    ViewBag.Title = "OrderDetails";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>OrderDetails</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
+    }
+    <tr>
+        <th colspan="3" align="left">Total</th>
+        <th>@ViewBag.Total</th>
+    </tr>
+    <tr>
+        <td>
+            @if (ViewBag.Status == 1)
+            {
+                <a href="/Order/CancelOrder/@ViewBag.ID" class="btn btn-danger">Cancel</a>
+            }
+        </td>
+        <td>
+            @*<a href="/Order/OrderDetails/@item.Id" class="btn btn-primary">Details</a>*@
+        </td>
+    </tr>
+
+</table>
+
+

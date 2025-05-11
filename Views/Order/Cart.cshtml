@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Mubayaa.DTOs.ProductDTO>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+@if (TempData["Msg"] != null)
+{
+    <div>
+        <p class="alert alert-@TempData["Class"]">@TempData["Msg"]</p>
+    </div>
+}
+
+<h2>Cart</h2>
+
+@{
+    decimal gtotal = 0;
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            Total
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        decimal unitTotal = item.Price * item.Quantity;
+        gtotal += unitTotal;
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @{
+                    string categoryName = item.Category switch
+                    {
+                        1 => "Electronics",
+                        2 => "Cosmetics",
+                        3 => "Clothings",
+                        4 => "Footware",
+                        _ => "Unknown"
+                    };
+                }
+                @categoryName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <div class="input-group" style="width:130px;">
+
+                    <a href="/order/cartdec/@item.Id" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-minus"></i>
+                    </a>
+
+                    <input type="number" value="@item.Quantity" disabled style="width:50px; text-align:center;" />
+
+                    <a href="/order/cartinc/@item.Id" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-plus"></i>
+                    </a>
+
+                </div>
+
+            </td>
+            <td>
+                @unitTotal
+            </td>
+            <td>
+                @Html.ActionLink("Remove", "RemoveFromCart", new { id = item.Id })
+            </td>
+        </tr>
+    }
+    <tr>
+        <th class="text-right" colspan="5">Grand Total</th>
+        <th>@gtotal</th>
+    </tr>
+
+</table>
+<form method="post" action="/order/placeOrder">
+    <input type="hidden" name="Total" value="@gtotal" />
+    <input type="submit" value="Place Order" class="btn btn-danger" />
+</form>

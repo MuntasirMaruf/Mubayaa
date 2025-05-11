@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Mubayaa.EF.Order>
+
+@{
+    ViewBag.Title = "MyOrders";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>My Orders</h2>
+@if (TempData["Msg"] != null)
+{
+    <div>
+        <p class="alert alert-@TempData["Class"]">@TempData["Msg"]</p>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Order Id
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @{
+                    string statusName = item.Status switch
+                    {
+                        1 => "Placed",
+                        2 => "Processing",
+                        3 => "Picked up",
+                        4 => "Delivered",
+                        5 => "Received",
+                        6 => "Cancelled",
+                        _ => "Undefined"
+                    };
+                }
+                @statusName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                <a href="/Order/OrderDetails/@item.Id" class="btn btn-primary">Details</a>
+                @if (item.Status == 1)
+                {
+                    <a href="/Order/CancelOrder/@item.Id" class="btn btn-danger">Cancel</a>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
