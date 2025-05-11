@@ -86,36 +86,26 @@ namespace Mubayaa.Controllers
             var user = (from u in db.Logins
                        where u.Email == email && u.Password == password
                        select u).SingleOrDefault();
-            if (user != null)
+            if (email != "" && password != "" && user != null)
             {
-                Session["User"] = user;
-                if (user.Email != email)
+                if (user.Status == 1)
                 {
-                    TempData["Msg"] = "Invalid Email";
-                    TempData["Class"] = "danger";
-
+                    return RedirectToAction("Home", "Order");
                 }
-                else if (user.Password != password)
+                else if (user.Status == 2)
                 {
-                    TempData["Msg"] = "Invalid Password";
-                    TempData["Class"] = "danger";
+                    return RedirectToAction("Index", "Product");
                 }
                 else
                 {
-                    if (user.Status == 1)
-                    {
-                        return RedirectToAction("Home", "Order");
-                    }
-                    else if (user.Status == 2)
-                    {
-                        return RedirectToAction("Index", "Product");
-                    }
-                    else
-                    {
-                        TempData["Msg"] = "Invalid User";
-                        TempData["Class"] = "danger";
-                    }
+                    TempData["Msg"] = "Invalid User";
+                    TempData["Class"] = "danger";
                 }
+            }
+            else
+            {
+                TempData["Msg"] = "Please enter valid credenitals";
+                TempData["Class"] = "danger";
             }
             return View();
         }
