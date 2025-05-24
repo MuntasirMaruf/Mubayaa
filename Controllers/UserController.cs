@@ -52,6 +52,8 @@ namespace Mubayaa.Controllers
             };
             db.Logins.Add(Login);
             db.SaveChanges();
+            TempData["Msg"] = "Registration Successful. Please login to continue.";
+            TempData["Class"] = "success";
             return RedirectToAction("Login", "User");
         }
 
@@ -71,6 +73,8 @@ namespace Mubayaa.Controllers
             };
             db.Logins.Add(Login);
             db.SaveChanges();
+            TempData["Msg"] = "Registration Successful. Please login to continue.";
+            TempData["Class"] = "success";
             return RedirectToAction("Login", "User");
         }
 
@@ -88,6 +92,7 @@ namespace Mubayaa.Controllers
                        select u).SingleOrDefault();
             if (email != "" && password != "" && user != null)
             {
+                Session["User"] = user;
                 if (user.Status == 1)
                 {
                     return RedirectToAction("Home", "Order");

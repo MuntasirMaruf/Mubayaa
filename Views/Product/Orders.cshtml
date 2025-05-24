@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Mubayaa.EF.Order>
+
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+@if (TempData["Msg"] != null)
+{
+    <div>
+        <p class="alert alert-@TempData["Class"]">@TempData["Msg"]</p>
+    </div>
+}
+
+<h2>Orders</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @{
+                    string statusName = item.Status switch
+                    {
+                        1 => "Placed",
+                        2 => "Processing",
+                        3 => "Delivered",
+                        4 => "Canceled",
+                        _ => "Unknown"
+                    };
+                }
+                @statusName
+            </td>
+            <td>
+                <a href="/Product/Details/@item.Id" name="details_btn_@item.Id" style="width:80px; text-align:center;" class="btn btn-primary">Details</a>
+                @if (item.Status == 1)
+                {
+                    <a href="/Product/Accept/@item.Id" name="accept_btn_@item.Id" style="width:80px; text-align:center;" class="btn btn-success">Accept</a>
+                }
+                else
+                {
+                    if (item.Status != 2)
+                    {
+                        <a href="/Product/Reject/@item.Id" name="reject_btn_@item.Id" style="width:80px; text-align:center;" class="btn btn-danger disabled" tabindex="-1" aria-disabled="true">Reject</a>
+                    }
+                    else
+                    {
+                        <a href="/Product/Reject/@item.Id" name="reject_btn_@item.Id" style="width:80px; text-align:center;" class="btn btn-danger">Reject</a>
+                    }
+                }
+
+                @if (item.Status == 4)
+                {
+                    <a href="/Product/Delete/@item.Id" name="delete_btn_@item.Id" style="width:80px; text-align:center;" class="btn btn-danger">Delete</a>
+                }
+                else
+                {
+                    <a href="/Product/Delete/@item.Id" name="delete_btn_@item.Id" style="width:80px; text-align:center;" class="btn btn-danger disabled" tabindex="-1" aria-disabled="true">Delete</a>
+                } 
+            </td>
+        </tr>
+    }
+
+</table>

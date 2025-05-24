@@ -5,8 +5,13 @@
     Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
 }
 
-<h2>Index</h2>
-
+<h3>All Products</h3>
+@if (TempData["Msg"] != null)
+{
+    <div>
+        <p class="alert alert-@TempData["Class"]">@TempData["Msg"]</p>
+    </div>
+}
 <table class="table">
     <tr>
         <th>
@@ -30,55 +35,56 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @{
+                    string categoryName = item.Category switch
+                    {
+                        1 => "Electronics",
+                        2 => "Perfumes",
+                        3 => "Leather Goods",
+                        4 => "Groceries",
+                        _ => "Unknown"
+                    };
+                }
+                @categoryName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @{
+                    string statusName = item.Status switch
+                    {
+                        1 => "In stock",
+                        2 => "Limited stock",
+                        3 => "Out of stock",
+                        4 => "Discontinued",
+                        _ => "Unknown"
+                    };
+                }
+                @statusName
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditProduct", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "RemoveProduct", new { id = item.Id })
+            </td>
+        </tr>
+    }
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
+        <td colspan="7">
+            <a href="/Product/AddProduct" name="add_product_btn">Add New Product</a>
         </td>
-        <td>
-            @{
-                string categoryName = item.Category switch
-                {
-                    1 => "Electronics",
-                    2 => "Cosmetics",
-                    3 => "Clothings",
-                    4 => "Footware",
-                    _ => "Unknown"
-                };
-            }
-            @categoryName
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @{
-                string statusName = item.Status switch
-                {
-                    1 => "In stock",
-                    2 => "Limited stock",
-                    3 => "Out of stock",
-                    4 => "Discontinued",
-                    _ => "Unknown"
-                };
-            }
-            @statusName
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditProduct", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "RemoveProduct", new { id=item.Id })
-        </td>
-    </tr>
-}
-    <tr>
-    <td colspan="7">
-        @Html.ActionLink("Add New Product", "AddProduct")
-    </td>
     </tr>
 </table>

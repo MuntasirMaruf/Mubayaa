@@ -48,9 +48,9 @@
                     string categoryName = item.Category switch
                     {
                         1 => "Electronics",
-                        2 => "Cosmetics",
-                        3 => "Clothings",
-                        4 => "Footware",
+                        2 => "Perfumes",
+                        3 => "Leather Goods",
+                        4 => "Groceries",
                         _ => "Unknown"
                     };
                 }
@@ -79,7 +79,7 @@
                 @statusName
             </td>
             <td>
-                <a href="/Order/AddtoCart/@item.Id" class="btn btn-primary">Add to Cart</a>
+                <a id="add_to_cart_btn_@item.Id" href="/Order/AddtoCart/@item.Id" class="btn btn-primary">Add to Cart</a>
             </td>
         </tr>
     }

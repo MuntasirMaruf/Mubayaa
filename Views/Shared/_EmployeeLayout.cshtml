@@ -17,9 +17,10 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Products", "Index", "Product", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Product", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Product", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Products", "Index", "Product", new { area = "" }, new { @class = "nav-link", @name="producs_btn"})</li>
+                    <li>@Html.ActionLink("Orders", "Orders", "Product", new { area = "" }, new { @class = "nav-link", @name = "orders_btn" })</li>
+                    <li>@Html.ActionLink("About", "About", "Product", new { area = "" }, new { @class = "nav-link", @name = "about_btn" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Product", new { area = "" }, new { @class = "nav-link", @name = "contact_btn" })</li>
                 </ul>
             </div>
         </div>

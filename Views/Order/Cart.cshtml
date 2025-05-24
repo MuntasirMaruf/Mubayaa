@@ -13,7 +13,7 @@
     </div>
 }
 
-<h2>Cart</h2>
+<h3>Cart</h3>
 
 @{
     decimal gtotal = 0;
@@ -103,5 +103,5 @@
 </table>
 <form method="post" action="/order/placeOrder">
     <input type="hidden" name="Total" value="@gtotal" />
-    <input type="submit" value="Place Order" class="btn btn-danger" />
+    <input type="submit" name="place_order_btn" value="Place Order" class="btn btn-danger" />
 </form>

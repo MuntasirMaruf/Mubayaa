@@ -5,13 +5,10 @@
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
 
-<h2>OrderDetails</h2>
+<h3>Order Id: @(Model.FirstOrDefault()?.OrderId)</h3>
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderId)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.ProductId)
         </th>
@@ -27,9 +24,6 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.OrderId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.ProductId)
             </td>
             <td>
@@ -41,14 +35,14 @@
         </tr>
     }
     <tr>
-        <th colspan="3" align="left">Total</th>
+        <th colspan="2" align="left">Total</th>
         <th>@ViewBag.Total</th>
     </tr>
     <tr>
         <td>
             @if (ViewBag.Status == 1)
             {
-                <a href="/Order/CancelOrder/@ViewBag.ID" class="btn btn-danger">Cancel</a>
+                <a href="/Order/CancelOrder/@ViewBag.Id" name="cancle_btn" class="btn btn-danger">Cancel</a>
             }
         </td>
         <td>

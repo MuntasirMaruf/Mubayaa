@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
 
-<h2>My Orders</h2>
+<h2>My orders</h2>
 @if (TempData["Msg"] != null)
 {
     <div>
@@ -45,10 +45,8 @@
                     {
                         1 => "Placed",
                         2 => "Processing",
-                        3 => "Picked up",
-                        4 => "Delivered",
-                        5 => "Received",
-                        6 => "Cancelled",
+                        3 => "Delivered",
+                        4 => "Cancelled",
                         _ => "Undefined"
                     };
                 }
@@ -58,10 +56,10 @@
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
-                <a href="/Order/OrderDetails/@item.Id" class="btn btn-primary">Details</a>
+                <a href="/Order/OrderDetails/@item.Id" name="details_btn_@item.Id" class="btn btn-primary">Details</a>
                 @if (item.Status == 1)
                 {
-                    <a href="/Order/CancelOrder/@item.Id" class="btn btn-danger">Cancel</a>
+                    <a href="/Order/CancelOrder/@item.Id" name="cancle_btn_@item.Id" class="btn btn-danger">Cancel</a>
                 }
             </td>
         </tr>

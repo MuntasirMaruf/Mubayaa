@@ -71,14 +71,14 @@
         <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" name="crate_btn" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 
-@Html.ActionLink("Already have an account?", "Login")
+<a href="/User/Login" name="log_btn">Do not have an account?</a>
 
 
 @section Scripts {

@@ -101,14 +101,44 @@ namespace Mubayaa.Controllers
                         Price = item.Price,
                     };
                     db.OrderDetails.Add(orderDetail);
+
+                    var existingStock = (from p in db.Products
+                                         where p.Id == item.Id
+                                         select p).SingleOrDefault();
+                    existingStock.Quantity -= item.Quantity;   // Update the product quantity in the database
                 }
+
                 db.SaveChanges();
 
                 TempData["Msg"] = "Order placed successfully";
                 TempData["Class"] = "success";
                 Session["Cart"] = null;   // Clear the cart from session
             }
-                return RedirectToAction("Home");
+            return RedirectToAction("Home");
+        }
+
+        public ActionResult CancelOrder(int id)
+        {
+            var existingOrder = db.Orders.Find(id);
+            existingOrder.Status = 4;
+            db.SaveChanges();
+            TempData["Msg"] = "Order candled";
+            TempData["Class"] = "danger";
+
+            var existingOrderDetails = (from od in db.OrderDetails
+                                        where od.OrderId == id
+                                        select od).ToList();
+
+            foreach (var order in existingOrderDetails)
+            {
+                var existingStock = (from p in db.Products
+                                     where p.Id == order.ProductId
+                                     select p).SingleOrDefault();
+                existingStock.Quantity += order.Quantity;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("MyOrders");
         }
 
         public ActionResult CartDec(int id)
@@ -140,8 +170,16 @@ namespace Mubayaa.Controllers
         {
             var user = (Login)Session["User"];
             var orders = (from o in db.Orders
-                          where o.CustomerId == user.Id && o.Status != 6
+                          where o.CustomerId == user.Id
                           select o).ToList();
+
+            if (user == null)
+            {
+                TempData["Msg"] = "No ongoing orders";
+                TempData["Class"] = "danger";
+                return RedirectToAction("Home");
+            }
+
             return View(orders);
         }
 
@@ -156,17 +194,6 @@ namespace Mubayaa.Controllers
             ViewBag.Total = order.Total;
             ViewBag.Status = order.Status;
             return View(orderDetails);
-        }
-
-
-        public ActionResult CancelOrder(int id)
-        {
-            var existingOrder = db.Orders.Find(id);
-            existingOrder.Status = 6;
-            db.SaveChanges();
-            TempData["Msg"] = "Order candled";
-            TempData["Class"] = "danger";
-            return RedirectToAction("MyOrders");
         }
     }
 }

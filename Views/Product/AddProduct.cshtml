@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
 }
 
-<h2>AddProduct</h2>
+<h2>Add a new product</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -29,9 +29,9 @@
             @Html.DropDownListFor(model => model.Category, new List<SelectListItem>
             {
                 new SelectListItem { Text = "Electronics", Value = "1" },
-                new SelectListItem { Text = "Cosmetics", Value = "2" },
-                new SelectListItem { Text = "Clothings", Value = "3" },
-                new SelectListItem { Text = "Footware", Value = "4" }
+                new SelectListItem { Text = "Perfumes", Value = "2" },
+                new SelectListItem { Text = "Leather Goods", Value = "3" },
+                new SelectListItem { Text = "Groceries", Value = "4" }
             }, "-- Select Category --", new { @class = "form-control" })
 
             @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
@@ -66,7 +66,7 @@
     <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Add" class="btn btn-primary" />
+            <input type="submit" value="Add" name="add_btn" class="btn btn-primary" />
         </div>
     </div>
 </div>

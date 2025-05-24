@@ -18,10 +18,10 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Home", "Order", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Cart", "Cart", "Order", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("My Orders", "MyOrders", "Order", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Order", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Order", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Cart", "Cart", "Order", new { area = "" }, new { @class = "nav-link", @name = "cart_btn" })</li>
+                    <li>@Html.ActionLink("My Orders", "MyOrders", "Order", new { area = "" }, new { @class = "nav-link", @name = "my_orders_btn" })</li>
+                    <li>@Html.ActionLink("About", "About", "Order", new { area = "" }, new { @class = "nav-link", @name = "about_btn" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Order", new { area = "" }, new { @class = "nav-link", @name = "contact_btn"})</li>
                 </ul>
             </div>
         </div>
